@@ -1,16 +1,25 @@
-export default function initScrollSuave() {
-  const linksInternos = document.querySelectorAll('[data-anime="accordion"] a[href^="#"]');
+export default class ScrollSuave{
+  constructor(links, opcoes){
+    this.linksInternos = document.querySelectorAll(links);
+    if(opcoes === undefined) {
+      this.options = {
+        behavior: 'smooth',
+        block: 'start' // alinha o bloco ao início
+      }
+    } else {
+      this.options = opcoes;
+    }
 
-  function scrollToSection(event) {
+    this.scrollToSection = this.scrollToSection.bind(this);
+  }
+
+  scrollToSection(event) {
     event.preventDefault();
     const href = event.currentTarget.getAttribute('href');
     const section = document.querySelector(href);
     // const topo = section.offsetTop;
 
-    section.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start', // alinha o bloco ao início
-    });
+    section.scrollIntoView(this.options);
 
     // forma alternativa
     // window.scrollTo({
@@ -18,8 +27,17 @@ export default function initScrollSuave() {
     //   behavior: 'smooth'
     // })
   }
+  
+  addLinkEvent() {
+    this.linksInternos.forEach((link) => {
+      link.addEventListener('click', this.scrollToSection);
+    });
+  }
 
-  linksInternos.forEach((link) => {
-    link.addEventListener('click', scrollToSection);
-  });
+  init() {
+    if (this.linksInternos.length) {
+      this.addLinkEvent();
+    }
+    return this; // posso retornar outras propriedades no método init no arquivo 'script.js'
+  }  
 }
