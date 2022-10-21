@@ -11,7 +11,6 @@ function handleClick(eventoClique) {
 
   initOutsideClick(this, ['touchstart', 'click'], () => { // o this refere-se ao parâmetro "elemento"(li) da função outsideClick, já a function desta linha, refere-se ao parâmetro de callback da função outsideClick
     this.classList.remove('active');
-    console.log(this);
   });
 }
 
