@@ -12,20 +12,22 @@ export default class Accordion {
   // adiciona os eventos ao accordion
   addAccordionEvent() {
     this.accordionList.forEach((item) => {
-      // início do accordion com a classe 'ativo' em todos os itens (deixa o accordion com todos os itens abertos)
-      item.classList.add(this.activeClass);
-      item.nextElementSibling.classList.add(this.activeClass);
-      // fim do accordion com a classe 'ativo' em todos os itens
       item.addEventListener('click', () => this.toggleAccordion(item));
     });
   }
 
   // iniciar função
   init() {
+    console.log(this)
     if(this.accordionList.length) {
-      // ativar itens
+      // ativar todos os itens
+      this.accordionList.forEach((item) => {
+        // início do accordion com a classe 'ativo' em todos os itens (deixa o accordion com todos os itens abertos)
+        item.classList.add(this.activeClass);
+        item.nextElementSibling.classList.add(this.activeClass);
+      })
       this.addAccordionEvent();
-      this.toggleAccordion(this.accordionList[0]);
     }
+    return this;
   }
 }
