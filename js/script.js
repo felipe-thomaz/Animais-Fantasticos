@@ -16,10 +16,9 @@ scrollSuave.init();
 
 initAccordion();
 
-const tabnav = new TabNav();
+const tabnav = new TabNav('[data-tab="menu"] li', '[data-tab="content"] section');
 
-// '[data-tab="menu"] li'
-// '[data-tab="content"] section'
+tabnav.init()
 
 initModal();
 initTooltip();
