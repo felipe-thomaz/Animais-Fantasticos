@@ -18,7 +18,6 @@ export default class Accordion {
 
   // iniciar função
   init() {
-    console.log(this)
     if(this.accordionList.length) {
       // ativar todos os itens
       this.accordionList.forEach((item) => {
