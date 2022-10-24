@@ -39,5 +39,5 @@ export default class ScrollSuave{
       this.addLinkEvent();
     }
     return this; // posso retornar outras propriedades no método init no arquivo 'script.js'
-  }  
+  }
 }

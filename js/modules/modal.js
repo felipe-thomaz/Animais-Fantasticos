@@ -1,22 +1,44 @@
-export default function initModal() {
-  const lineModal = document.querySelector('[data-modal="abrir"]');
-  const containerModal = document.querySelector('[data-modal="container"]');
-  const botaoFecharModal = document.querySelector('[data-modal="fechar"]');
+export default class Modal {
+  constructor(botaoAbrir, botaoFechar, containerModal) {
+    this.openModalButton = document.querySelector(botaoAbrir);
+    this.closeButton = document.querySelector(botaoFechar);
+    this.modalContainer = document.querySelector(containerModal);
 
-  function toggleModal(event) {
-    event.preventDefault();
-    containerModal.classList.toggle('ativo');
+    // bind "this" ao callback para fazer referência ao objeto da classe.
+    this.eventToggleModal = this.eventToggleModal.bind(this);
+    this.cliqueForaModal = this.cliqueForaModal.bind(this);
   }
 
-  function cliqueForaModal(event) {
-    if (event.target === this) {
-      toggleModal(event);
+  // abre ou fecha o modal
+  toggleModal() {
+    this.modalContainer.classList.toggle('ativo');
+  }
+
+  // adiciona o evento de toggle ao modal
+  eventToggleModal(event) {
+    event.preventDefault();
+    // this foi bindado ao this deste método
+    this.toggleModal();
+  }
+
+  // fecha o modal ao clicar do lado de fora dela
+  cliqueForaModal(event) {
+    if (event.target === this.modalContainer) {
+      this.toggleModal(event);
     }
   }
 
-  if (lineModal && containerModal && botaoFecharModal) {
-    lineModal.addEventListener('click', toggleModal);
-    botaoFecharModal.addEventListener('click', toggleModal);
-    containerModal.addEventListener('click', cliqueForaModal);
+  // adiciona os eventos aos elementos do modal
+  addModalEvents() {
+    this.openModalButton.addEventListener('click', this.eventToggleModal);
+    this.closeButton.addEventListener('click', this.eventToggleModal);
+    this.modalContainer.addEventListener('click', this.cliqueForaModal);
+  }
+
+  init() {
+    if(this.openModalButton && this.modalContainer && this.closeButton) {
+      this.addModalEvents()
+    }
+    return this;
   }
 }
