@@ -23,12 +23,13 @@ export default class initTabNav {
     });
   }
 
-  init(){
+  init() {
     if(this.tabMenu.length && this.tabContent.length) {
       // ativar primeiro item
       this.activeTab(0)
 
       this.addTabNavEvent();
     }
+    return this;
   }
 }
