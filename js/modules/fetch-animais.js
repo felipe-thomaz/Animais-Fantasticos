@@ -1,31 +1,43 @@
 import AnimaNumeros from './anima-numeros.js';
 
-export default function initFetchAnimais() {
-  async function fetchAnimais(url) {
-    function createAnimal(animal) {
-      // console.log(animal)
-      const div = document.createElement('div');
-      div.classList.add('numero-animal');
+export default function fetchAnimais(url, target) {
+  // Cria a div contendo o total de animais
+  function createAnimal(animal) {
+    const div = document.createElement('div');
+    div.classList.add('numero-animal');
+    div.innerHTML = `<h3>${animal.species}</h3><span data-numero>${animal.total}</span>`;
+    
+    return div;
+  }
 
-      div.innerHTML = `<h3>${animal.species}</h3><span data-numero>${animal.total}</span>`;
+  // Preenche cada animal no DOM
+  const numerosGrid = document.querySelector(target);
+  function preencherAnimais(animal){
+    const divAnimal = createAnimal(animal);
+    numerosGrid.appendChild(divAnimal);
+  }
 
-      return div;
-    }
+  // Anima os números de cada animal
+  function animaAnimaisNumeros(){
+    const animaNumeros = new AnimaNumeros('[data-numero]', '.numeros', 'ativo');
+    animaNumeros.init();
+  }
+
+  // Puxa os animais através de um arquivo json e cria cada animal utilizando createAnimal
+  async function criarAnimais() {
     try {
+      // Fetch e espera a resposta
       const animaisResponse = await fetch(url);
+      // Transforma a resposta em json
       const animaisJson = await animaisResponse.json();
-      const numerosGrid = document.querySelector('.numeros-grid');
 
-      animaisJson.forEach((animal) => {
-        const divAnimal = createAnimal(animal);
-        numerosGrid.appendChild(divAnimal);
-      });
-      const animaNumeros = new AnimaNumeros('[data-numero]', '.numeros', 'ativo');
-      animaNumeros.init();
+      // Após a transformação para json, ativa as funções para preencher e animar os números
+      animaisJson.forEach((animal) => preencherAnimais(animal));
+      animaAnimaisNumeros();
     } catch (erro) {
       console.log(Error(erro));
     }
   }
 
-  fetchAnimais('./animaisapi.json');
+  return criarAnimais();
 }
