@@ -1,4 +1,4 @@
-export default function initOutsideClick(elemento, events, callback) {
+export default function outsideClick(elemento, events, callback) {
   // o parâmetro elemento refere-se ao this, que na função handleClick é o próprio dropdown menu
   const html = document.documentElement;
   const outside = 'data-outside';
@@ -13,16 +13,16 @@ export default function initOutsideClick(elemento, events, callback) {
       elemento.removeAttribute(outside);
 
       // passa o método de remover o evento de 'touchstart' e 'click' juntos abaixo:
-      // events.forEach(userEvent => {
-      //   html.removeEventListener(userEvent, handleOutsideClick)
+      events.forEach(userEvent => {
+        html.removeEventListener(userEvent, handleOutsideClick)
       // remove o evento de touchstart e click no HTML
-      // })
+      })
 
       // passa o método de remover o evento de 'touchstart' e 'click' separadamente abaixo:
-      events.forEach(() => {
-        html.removeEventListener('touchstart', handleOutsideClick);
-        html.removeEventListener('click', handleOutsideClick);
-      });
+      // events.forEach(() => {
+      //   html.removeEventListener('touchstart', handleOutsideClick);
+      //   html.removeEventListener('click', handleOutsideClick);
+      // });
       callback();
     }
   }
