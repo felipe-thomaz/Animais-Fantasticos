@@ -12,13 +12,13 @@ export default function fetchAnimais(url, target) {
 
   // Preenche cada animal no DOM
   const numerosGrid = document.querySelector(target);
-  function preencherAnimais(animal){
+  function preencherAnimais(animal) {
     const divAnimal = createAnimal(animal);
     numerosGrid.appendChild(divAnimal);
   }
 
   // Anima os números de cada animal
-  function animaAnimaisNumeros(){
+  function animaAnimaisNumeros() {
     const animaNumeros = new AnimaNumeros('[data-numero]', '.numeros', 'ativo');
     animaNumeros.init();
   }
