@@ -16,7 +16,9 @@ export default class MenuMobile {
     this.openMenu = this.openMenu.bind(this);
   }
 
-  openMenu() {
+  openMenu(event) {
+    // previne o comportamento padrão do click junto ao touchstart
+    event.preventDefault();
     this.menuBtn.classList.add(this.activeClass);
     this.menuList.classList.add(this.activeClass);
     outsideClick(this.menuList, this.events, () => {
